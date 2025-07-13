@@ -64,16 +64,16 @@ const posts = readJson('./data/posts.json');
 const comments = readJson('./data/comments.json');
 
 // Route pour afficher les posts sur la page d'accueil
-app.get('/', (req, res) => {
-  res.send(`
-    Bienvenue sur l'API du mini-blog !
-    Contenu de posts.json :
-    ${JSON.stringify(posts, null, 2)}
-  `);
+// app.get('/', (req, res) => {
+//   res.send(`
+//     Bienvenue sur l'API du mini-blog !
+//     Contenu de posts.json :
+//     ${JSON.stringify(posts, null, 2)}
+//   `);
 
-  afficherFichier('./data/posts.json');
-  afficherFichier('./data/comments.json');
-});
+//   afficherFichier('./data/posts.json');
+//   afficherFichier('./data/comments.json');
+// });
 
 // Fonction pour afficher le contenu d'un fichier dans la console
 const afficherFichier = (filePath) => {
@@ -82,16 +82,26 @@ const afficherFichier = (filePath) => {
 };
 app.get('/posts/:id',(req,res)=>{
     const id=parseInt(req.params.id)
-    const post=(films.find(f =>f.id===id))
+    const post=(posts.find(f =>f.id===id))
     if (!post){
         
         res.status(404).send('post not found')
     }else{
-        res.json(film).status(200)
+        res.json(post).status(200)
     }
  })
+ // Route pour afficher les posts sur la page d'accueil
+ app.get('/', (req, res) => {
+  res.send(`
+    Bienvenue sur l'API du mini-blog !
+    Contenu de posts.json :
+    ${JSON.stringify(posts, null, 2)}
+  `);
+}); // 👈 Parenthèse fermante et point-virgule manquant ici
+
 // Lancement du serveur
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
+
